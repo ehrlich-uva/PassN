@@ -84,6 +84,7 @@ physics.producers.CrvCoincidenceClusterFinder.sectorConfig:
           maxSlopeDifference : 4
           coincidenceLayers : 3
           minClusterPEs : 0
+          initialClusterMaxDistance : 250
         },
         {
           CRVSector : "T1"
@@ -97,6 +98,7 @@ physics.producers.CrvCoincidenceClusterFinder.sectorConfig:
           maxSlopeDifference : 4
           coincidenceLayers : 3
           minClusterPEs : 0
+          initialClusterMaxDistance : 250
         },
         {
           CRVSector : "T2"
@@ -110,6 +112,7 @@ physics.producers.CrvCoincidenceClusterFinder.sectorConfig:
           maxSlopeDifference : 4
           coincidenceLayers : 3
           minClusterPEs : 0
+          initialClusterMaxDistance : 250
         }
       ]
 

@@ -1,3 +1,4 @@
+bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, double &SPEpeak);
 void CrvCalibration(const std::string &inputFileName, const std::string &outputFileName)
 {
     TFile *inputFile = TFile::Open(inputFileName.c_str(),"update");
@@ -14,7 +15,8 @@ void CrvCalibration(const std::string &inputFileName, const std::string &outputF
       pedestals[channel]=pedestal;
     }
 
-    TF1 funcCalib("f0", "gaus");
+    TF1 funcCalib("SPEpeak", "gaus");
+    TSpectrum spectrum(3*2);
 
     std::ofstream outputFile;
     outputFile.open(outputFileName);
@@ -33,33 +35,21 @@ void CrvCalibration(const std::string &inputFileName, const std::string &outputF
         if(i==1) hist=(TH1F*)gDirectory->FindObjectAny(Form("crvCalibrationHistPulseArea_%zu",channel));
         else hist=(TH1F*)gDirectory->FindObjectAny(Form("crvCalibrationHistPulseHeight_%zu",channel));
 
-        if(hist->GetEntries()<100) //not enough data
+        double peakCalib=0;
+        if(!FindSPEpeak(hist, spectrum, peakCalib))
         {
           calibValue[i]=-1;
           continue;
         }
 
-/*
-        int n=hist->GetNbinsX();
-        double overflow=hist->GetBinContent(0)+hist->GetBinContent(n+1);
-        if(overflow/((double)hist->GetEntries())>0.1) //too much underflow/overflow. something may be wrong.
-        {
-          calibValue[i]=-1;
-          continue;
-        }
-*/
-
-        int maxbinCalib = hist->GetMaximumBin();
-        double peakCalib = hist->GetBinCenter(maxbinCalib);
-//FIXME        funcCalib.SetRange(peakCalib*0.8,peakCalib*1.2);
-        funcCalib.SetRange(peakCalib*0.7,peakCalib*1.3);
-        if(hist->FindBin(peakCalib*0.7)==hist->FindBin(peakCalib*1.3))
+        funcCalib.SetRange(peakCalib*0.8,peakCalib*1.2);
+        if(hist->FindBin(peakCalib*0.8)==hist->FindBin(peakCalib*1.2)) //fit range start/end are in the same bin
         {
           calibValue[i]=-1;
           continue;
         }
         funcCalib.SetParameter(1,peakCalib);
-        hist->Fit(&funcCalib, "0QR");
+        hist->Fit(&funcCalib, "QR");
         calibValue[i]=funcCalib.GetParameter(1);
       }
 
@@ -90,4 +80,32 @@ void CrvCalibration(const std::string &inputFileName, const std::string &outputF
 
     outputFile.close();
     inputFile->Close();
+}
+
+bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, double &SPEpeak)
+{
+    if(hist->GetEntries()<100) return false; //not enough data
+
+    int n=hist->GetNbinsX();
+    double overflow=hist->GetBinContent(0)+hist->GetBinContent(n+1);
+    if(overflow/((double)hist->GetEntries())>0.1) return false; //too much underflow/overflow. something may be wrong.
+
+    int nPeaks = spectrum.Search(hist,4.0,"nodraw",0.01);
+    if(nPeaks==0) return false;
+
+    //peaks are not returned sorted
+    double *peaksX = spectrum.GetPositionX();
+    double *peaksY = spectrum.GetPositionY();
+    std::vector<std::pair<double,double> > peaks;
+    for(int iPeak=0; iPeak<nPeaks; ++iPeak) peaks.emplace_back(peaksX[iPeak],peaksY[iPeak]);
+    std::sort(peaks.begin(),peaks.end(), [](const std::pair<double,double> &a, const std::pair<double,double> &b) {return a.first<b.first;});
+
+    int peakToUse=0;
+    if(nPeaks>1)   //if more than one peak is found, the first peak could be due to baseline fluctuations
+    {
+      if(fabs(peaks[1].first/peaks[0].first-2.0)>0.1) peakToUse=1; //2nd peak is not twice the 1st peak, so the 1st peak is not the 1PE peak
+                                                                   //assume that the 2nd peak is the 1PE peak
+    }
+    SPEpeak = peaks[peakToUse].first;
+    return true;
 }
