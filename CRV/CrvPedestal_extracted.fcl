@@ -36,20 +36,9 @@ physics: {
   }
 
   TriggerPath : [ CrvDigi ]
-  EndPath :     [ CrvPedestalFinder, outfileNZS ]
+  EndPath :     [ CrvPedestalFinder ]
   trigger_paths : [ TriggerPath ]
   end_paths :     [ EndPath ]
-}
-outputs:
-{
-  outfileNZS :
-  {
-    module_type   :   RootOutput
-    fileName      :   "crvDigiNZSExtracted.art"
-    outputCommands : [ "drop *_*_*_*" ,
-                       "keep mu2e::CrvDAQerrors_*_*_*" ,
-                       "keep mu2e::CrvDigis_*_NZS_*" ]
-  }
 }
 
 physics.analyzers.CrvPedestalFinder.tmpDBfileName  : "pedestalsExtracted.txt"

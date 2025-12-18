@@ -4,7 +4,7 @@ const int    minHistEntries=100;
 const int    spectrumNPeaks=6;
 const double spectrumPeakSigma=4.0;
 const double spectrumPeakThreshold=0.01;
-const double peakRatioTolerance=0.1;
+const double peakRatioTolerance=0.2;
 
 bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, double &SPEpeak);
 
