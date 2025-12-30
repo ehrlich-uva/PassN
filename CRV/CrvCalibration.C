@@ -90,13 +90,13 @@ bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, std::array<TF1,N> &functions, 
 {
     if(hist->GetEntries()<minHistEntries) return false; //not enough data
 
-    int nPeaks = spectrum.Search(hist,spectrumPeakSigma,"nodraw",spectrumPeakThreshold);
+    size_t nPeaks = spectrum.Search(hist,spectrumPeakSigma,"nodraw",spectrumPeakThreshold);
     if(nPeaks==0) return false;
 
     //peaks are returned sorted by Y
     double *peaksX = spectrum.GetPositionX();
     std::vector<double> fittedPeaks;
-    for(int iPeak=0; iPeak<nPeaks && iPeak<functions.size(); ++iPeak)
+    for(size_t iPeak=0; iPeak<nPeaks && iPeak<functions.size(); ++iPeak)
     {
       double x=peaksX[iPeak];
       if(hist->FindBin(x*fitRangeStart)==hist->FindBin(x*fitRangeEnd)) continue; //fit range start/end are in the same bin
@@ -110,8 +110,8 @@ bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, std::array<TF1,N> &functions, 
     int peakToUse=-1;
     //only need to test two highest peaks (=first two entries in vector)
     //one of the peaks could be due to baseline fluctuations
-    for(int iPeak=0; iPeak<fittedPeaks.size() && iPeak<2; ++iPeak)
-    for(int jPeak=iPeak+1; jPeak<fittedPeaks.size(); ++jPeak)
+    for(size_t iPeak=0; iPeak<fittedPeaks.size() && iPeak<2; ++iPeak)
+    for(size_t jPeak=iPeak+1; jPeak<fittedPeaks.size(); ++jPeak)
     {
       if(fabs(fittedPeaks.at(jPeak)/fittedPeaks.at(iPeak)-2.0)<peakRatioTolerance) peakToUse=iPeak;
     }
