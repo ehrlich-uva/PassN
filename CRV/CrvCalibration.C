@@ -7,7 +7,7 @@ const int    spectrumNPeaks=100;
 const double spectrumPeakSigma=4.0;
 //const double spectrumPeakThreshold=0.001;
 const double spectrumPeakThreshold=0.01;
-const double peakRatioTolerance=0.3;
+//const double peakRatioTolerance=0.3;
 
 //template<size_t N>
 //bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, std::array<TF1,N> &functions, double &SPEpeak, double minPeak);
@@ -94,10 +94,15 @@ bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, TF1 &function, double &SPEpeak
 {
     if(hist->GetEntries()<minHistEntries) return false; //not enough data
 
-    size_t nPeaks = spectrum.Search(hist,spectrumPeakSigma,"nodraw",spectrumPeakThreshold);
-    if(nPeaks==0) return false;
+    int nPeaks = spectrum.Search(hist,spectrumPeakSigma,"nodraw",spectrumPeakThreshold);
+    if(nPeaks<=0) return false;
 
     //peaks are returned sorted by Y
+    //from our long-time experience:
+    //-SPE peak is either the highest peak or second highest peak
+    //-if the SPE peak is the second highest, then the highest peak comes from the baseline
+    //-the peak from the baseline is always below the minPeak threshold, while the SPE peak is not
+    //-the minPeak threshold may have to be adjusted for non-standard bias voltages
     double *peaksX = spectrum.GetPositionX();
     double x=peaksX[0];
     if(x<minPeak)
