@@ -1,0 +1,54 @@
+#pass1 for data from CRV modules at Wideband
+
+#contact: R. Ehrlich
+
+#include "mu2e-trig-config/core/trigProducers.fcl"
+#include "Offline/fcl/standardProducers.fcl"
+#include "Offline/fcl/standardServices.fcl"
+#include "Offline/CRVResponse/fcl/prolog.fcl"
+
+process_name : Timing
+
+services :
+{
+  @table::Services.Core
+  @table::Services.Reco
+}
+
+source :
+{
+  module_type : RootInput
+  fileNames   : @nil
+  maxEvents   : -1
+}
+
+physics :
+{
+  analyzers :
+  {
+    CrvTimingStudies:
+    {
+      module_type             : CrvTimingStudies
+      crvRecoPulseModuleLabel : CrvRecoPulses
+      PEthreshold             : 10  //PEs
+      removeTimeOffsets       : true
+    }
+  }
+
+  t1 : [ ]
+  e1 : [ CrvTimingStudies ]
+
+  trigger_paths  : [t1]
+  end_paths      : [e1]
+
+}
+
+services.TFileService.fileName : "crvRecoExtracted.root"
+services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+services.ProditionsService.crvCalib.useDb: true
+services.ProditionsService.crvStatus.useDb: false
+services.DbService.textFile : ["calibrationExtracted.txt"]
+services.DbService.verbose : 2
+services.TimeTracker.printSummary: true
+services.scheduler.wantSummary: true
+services.message.destinations.log.outputStatistics : true

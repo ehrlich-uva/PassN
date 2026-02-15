@@ -5,17 +5,14 @@ const double minPeakPulseHeight=10.0;
 const double minPeakPulseArea=250.0;
 const int    spectrumNPeaks=100;
 const double spectrumPeakSigma=4.0;
-//const double spectrumPeakThreshold=0.001;
 const double spectrumPeakThreshold=0.01;
-//const double peakRatioTolerance=0.3;
+const double maxFitDifference=100.0;
 
-//template<size_t N>
-//bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, std::array<TF1,N> &functions, double &SPEpeak, double minPeak);
 bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, TF1 &function, double &SPEpeak, double minPeak);
 
-void CrvCalibration(const std::string &inputFileName, const std::string &outputFileName)
+void CrvCalibration(const std::string &rootFileName, const std::string &calibFileName)
 {
-    TFile *inputFile = TFile::Open(inputFileName.c_str(),"update");
+    TFile *inputFile = TFile::Open(rootFileName.c_str(),"update");
     inputFile->cd("CrvCalibration");
     TTree *treePedestals = (TTree*)gDirectory->FindObjectAny("crvPedestals");
     size_t channel;
@@ -29,13 +26,12 @@ void CrvCalibration(const std::string &inputFileName, const std::string &outputF
       pedestals[channel]=pedestal;
     }
 
-//    std::array functions={TF1("calibPeak1","gaus"), TF1("calibPeak2","gaus"), TF1("calibPeak3","gaus")}; //only need to fit three peaks
     TF1 function("calibPeak","gaus");
-    TSpectrum spectrum(spectrumNPeaks); //any value of 3 or less results in a "Peak buffer full" warning.
+    TSpectrum spectrum(spectrumNPeaks);
 
     std::ofstream outputFile;
-    outputFile.open(outputFileName);
-    outputFile<<"TABLE CRVSiPM "<<std::endl;
+    outputFile.open(calibFileName);
+    outputFile<<"TABLE CRVSiPM"<<std::endl;
     outputFile<<"#channel, pedestal, calibPulseHeight, calibPulseArea"<<std::endl;
 
     for(auto iter=pedestals.begin(); iter!=pedestals.end(); ++iter)
@@ -52,7 +48,6 @@ void CrvCalibration(const std::string &inputFileName, const std::string &outputF
         hist->GetListOfFunctions()->Delete();
 
         double SPEpeak=-1;
-//        if(!FindSPEpeak(hist, spectrum, functions, SPEpeak, (i==0?minPeakPulseHeight:minPeakPulseArea)))
         if(!FindSPEpeak(hist, spectrum, function, SPEpeak, (i==0?minPeakPulseHeight:minPeakPulseArea)))
         {
           calibValue[i]=-1;
@@ -118,45 +113,8 @@ bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, TF1 &function, double &SPEpeak
     hist->Fit(&function, "QR");
     SPEpeak = function.GetParameter(1);
 
+    if(fabs(SPEpeak-x)>maxFitDifference) return false;
+    if(SPEpeak<minPeak) return false;
     return true;
 }
 
-/*
-template<size_t N>
-bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, std::array<TF1,N> &functions, double &SPEpeak, double minPeak)
-{
-    if(hist->GetEntries()<minHistEntries) return false; //not enough data
-
-    size_t nPeaks = spectrum.Search(hist,spectrumPeakSigma,"nodraw",spectrumPeakThreshold);
-    if(nPeaks==0) return false;
-
-    //peaks are returned sorted by Y
-    double *peaksX = spectrum.GetPositionX();
-    std::vector<double> fittedPeaks;
-    for(size_t iPeak=0; iPeak<nPeaks && iPeak<functions.size(); ++iPeak)
-    {
-      double x=peaksX[iPeak];
-      if(hist->FindBin(x*fitRangeStart)==hist->FindBin(x*fitRangeEnd)) continue; //fit range start/end are in the same bin
-      functions[iPeak].SetRange(x*fitRangeStart,x*fitRangeEnd);
-      functions[iPeak].SetParameter(1,x);
-      hist->Fit(&functions[iPeak], "QR+");
-      fittedPeaks.emplace_back(functions[iPeak].GetParameter(1));
-    }
-    if(fittedPeaks.size()==0) return false;
-
-    int peakToUse=-1;
-    //only need to test two highest peaks (=first two entries in vector)
-    //one of the peaks could be due to baseline fluctuations
-    for(size_t iPeak=0; iPeak<fittedPeaks.size() && iPeak<2; ++iPeak)
-    for(size_t jPeak=iPeak+1; jPeak<fittedPeaks.size(); ++jPeak)
-    {
-      if(fabs(fittedPeaks.at(jPeak)/fittedPeaks.at(iPeak)-2.0)<peakRatioTolerance) peakToUse=iPeak;
-    }
-    if(peakToUse==-1) return false;
-    if(fittedPeaks.at(peakToUse)<minPeak) return false;
-
-    SPEpeak = fittedPeaks.at(peakToUse);
-
-    return true;
-}
-*/

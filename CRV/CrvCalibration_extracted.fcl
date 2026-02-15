@@ -42,7 +42,6 @@ physics: {
 physics.producers.CrvRecoPulses.NZSdata : true
 physics.producers.CrvRecoPulses.pedestalUndershootThreshold : 10000.0 //prevents it from taking the 1st ADC sample
 physics.producers.CrvRecoPulses.minADCdifference   : 5    //minimum ADC difference above pedestal to be considered for reconstruction
-physics.analyzers.CrvCalibration.peakRatioTolerance  : 0.2
 physics.analyzers.CrvCalibration.tmpDBfileName  : "calibrationExtracted.txt"
 services.TFileService.fileName : "calibrationExtracted.root"
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
