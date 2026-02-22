@@ -2,12 +2,12 @@ const double fitRangeStart=0.8;
 const double fitRangeEnd=1.2;
 const int    minHistEntries=100;
 const double minPeakPulseHeight=10.0;
-const double minPeakPulseArea=250.0;
+const double minPeakPulseArea=300.0;
 const int    spectrumNPeaks=100;
 const double spectrumPeakSigma=4.0;
 const double spectrumPeakThreshold=0.01;
-const double maxFitDifferencePulseArea=100.0;
-const double maxFitDifferencePulseHeight=4.0;
+const double maxFitDifferencePulseArea=75.0;
+const double maxFitDifferencePulseHeight=2.5;
 
 bool FindSPEpeak(TH1F *hist, TSpectrum &spectrum, TF1 &function, double &SPEpeak, double minPeak, double maxFitDifference);
 
