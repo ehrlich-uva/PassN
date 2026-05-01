@@ -23,6 +23,7 @@ physics: {
     {
       module_type   : CrvDigisFromArtdaqFragmentsFEBII
       diagLevel     : 0
+      useROC4asROC2 : true
     }
     CrvRecoPulses: @local::CrvRecoPulses
   }
