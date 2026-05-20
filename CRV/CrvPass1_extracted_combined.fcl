@@ -76,7 +76,7 @@ physics.producers.CrvCoincidenceClusterFinder.sectorConfig[2].coincidenceLayers 
 #include "Production/JobConfig/common/epilog.fcl"
 physics.analyzers.EventNtuple.FillMCInfo : false
 physics.analyzers.EventNtuple.FillCRVDigis : false
-physics.analyzers.EventNtuple.FillCRVPulses : false
+physics.analyzers.EventNtuple.FillCRVPulses : true
 physics.analyzers.EventNtuple.branches : [ ] # no track branches
 physics.analyzers.EventNtuple.FillCaloClusters : false # no calorimeter
 physics.analyzers.EventNtuple.FillCaloHits : false # no calorimeter
