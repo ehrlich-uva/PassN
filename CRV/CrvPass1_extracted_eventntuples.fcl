@@ -50,6 +50,7 @@ physics.analyzers.EventNtuple.branches : [ ] # no track branches
 physics.analyzers.EventNtuple.FillCaloClusters : false # no calorimeter
 physics.analyzers.EventNtuple.FillCaloHits : false # no calorimeter
 physics.analyzers.EventNtuple.FillCaloClustersMC : false # no calorimeter
+physics.analyzers.EventNtuple.FillCaloHitsMC : false # no calorimeter
 physics.analyzers.EventNtuple.FillCaloSimInfos : false # no calorimeter
 physics.analyzers.EventNtuple.RecoCountTag : ""
 physics.analyzers.EventNtuple.PBTTag : ""
