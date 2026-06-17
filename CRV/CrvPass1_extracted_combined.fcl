@@ -74,22 +74,18 @@ physics.producers.CrvCoincidenceClusterFinder.sectorConfig[1].coincidenceLayers 
 physics.producers.CrvCoincidenceClusterFinder.sectorConfig[2].coincidenceLayers : 4 #trigger sector
 
 #include "Production/JobConfig/common/epilog.fcl"
-physics.analyzers.EventNtuple.FillMCInfo : false
-physics.analyzers.EventNtuple.FillCRVDigis : false
-physics.analyzers.EventNtuple.FillCRVPulses : true
-physics.analyzers.EventNtuple.branches : [ ] # no track branches
-physics.analyzers.EventNtuple.FillCaloClusters : false # no calorimeter
-physics.analyzers.EventNtuple.FillCaloHits : false # no calorimeter
-physics.analyzers.EventNtuple.FillCaloClustersMC : false # no calorimeter
-physics.analyzers.EventNtuple.FillCaloHitsMC : false # no calorimeter
-physics.analyzers.EventNtuple.FillCaloSimInfos : false # no calorimeter
+physics.analyzers.EventNtuple.mc.fill : false
+physics.analyzers.EventNtuple.trk.fill : false
+physics.analyzers.EventNtuple.calo.fill : false
 physics.analyzers.EventNtuple.RecoCountTag : ""
 physics.analyzers.EventNtuple.PBTTag : ""
 physics.analyzers.EventNtuple.hasCRV : false  #false prevents skipping events without CRV content in the ntuple
 physics.analyzers.EventNtuple.FillTriggerInfo : false
-physics.analyzers.EventNtuple.CrvDigisTag : "CrvDigi"
-physics.analyzers.EventNtuple.CrvCoincidencesTag: "CrvCoincidenceClusterFinder"
-physics.analyzers.EventNtuple.CrvRecoPulsesTag: "CrvRecoPulses"
+physics.analyzers.EventNtuple.crv.digisTag : "CrvDigi"
+physics.analyzers.EventNtuple.crv.coincidencesTag: "CrvCoincidenceClusterFinder"
+physics.analyzers.EventNtuple.crv.recoPulsesTag: "CrvRecoPulses"
+physics.analyzers.EventNtuple.crv.fillDigis : true
+physics.analyzers.EventNtuple.crv.fillPulses : true
 
 services.TFileService.fileName : "crvRecoExtracted.root"
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
