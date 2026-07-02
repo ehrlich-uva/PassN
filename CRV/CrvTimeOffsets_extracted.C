@@ -17,9 +17,10 @@ void CrvTimeOffsets_extracted(const std::string &rootFileName, const std::string
 {
   std::map<std::pair<int,int>,float> measuredTimeDiffs;
   std::map<int,float> timeOffsets;
-  timeOffsets[(1-1)*4]=0;      //FEB1 is used as reference
+  timeOffsets[(1-1)*4]=0;     //FEB1 is used as reference
   timeOffsets[(17-1)*4]=112;  //FEB17 has 72ft longer cable (for testing purpose)
   timeOffsets[(25-1)*4]=7.8;  //FEB25 has 5ft longer cable
+  timeOffsets[(30-1)*4]=34;   //FEB30 has 22ft longer cable
 
   TCanvas c0;
   c0.Print(Form("%s[", pdfFileName.c_str()), "pdf");
@@ -33,8 +34,10 @@ void CrvTimeOffsets_extracted(const std::string &rootFileName, const std::string
   file->cd("CrvTimingStudies");
 
   //compare all FPGAs of an FEB
-  for(int feb=0; feb<28; ++feb)
+  for(int feb=0; feb<31; ++feb)
   {
+    if(feb==28) continue;  //replacement for feb==1 (ROC1/FEB2-->ROC2/FEB5)
+
     TCanvas *c = new TCanvas(Form("FEB %i",feb+1),Form("FEB %i",feb+1),800,800);
     TText *t = new TText(.1,.8,Form("FEB %i",(feb!=1?feb+1:29)));
     gROOT->Add(c);
@@ -49,15 +52,25 @@ void CrvTimeOffsets_extracted(const std::string &rootFileName, const std::string
     TVirtualPad *pad=gPad;
     pad->Divide(3,1);
 
-    Plot(file,pad,1,pdfFileName, feb,0, feb,2, measuredTimeDiffs);
-    Plot(file,pad,2,pdfFileName, feb,1, feb,3, measuredTimeDiffs);
-    Plot(file,pad,3,pdfFileName, feb,0, feb,3, measuredTimeDiffs);
+    if(feb<29) //regular modules
+    {
+      Plot(file,pad,1,pdfFileName, feb,0, feb,2, measuredTimeDiffs);
+      Plot(file,pad,2,pdfFileName, feb,1, feb,3, measuredTimeDiffs);
+      Plot(file,pad,3,pdfFileName, feb,0, feb,3, measuredTimeDiffs);
+    }
+    else //muon taggers
+    {
+      Plot(file,pad,1,pdfFileName, feb,0, feb,1, measuredTimeDiffs);
+      Plot(file,pad,2,pdfFileName, feb,1, feb,2, measuredTimeDiffs);
+      Plot(file,pad,3,pdfFileName, feb,2, feb,3, measuredTimeDiffs);
+    }
 
     c->Print(pdfFileName.c_str(),"pdf");
   }
 
   //compare both FEBs at a module's readout side
-  for(int crvmodule=0; crvmodule<8; ++crvmodule)
+  //module 8 is for the muon taggers
+  for(int crvmodule=0; crvmodule<9; ++crvmodule)
   {
     TCanvas *c = new TCanvas(Form("Module %i",crvmodule+1),Form("Module %i",crvmodule+1),800,800);
     TText *t = new TText(.1,.8,Form("Module %i (FEBs on same side)",crvmodule+1));
@@ -80,6 +93,7 @@ void CrvTimeOffsets_extracted(const std::string &rootFileName, const std::string
     }
     else if(crvmodule==6) Plot(file,pad,1,pdfFileName, 24,3, 25,1, measuredTimeDiffs);
     else if(crvmodule==7) Plot(file,pad,1,pdfFileName, 26,3, 27,1, measuredTimeDiffs);
+    else if(crvmodule==8) Plot(file,pad,1,pdfFileName, 29,3, 30,0, measuredTimeDiffs);
 
     c->Print(pdfFileName.c_str(),"pdf");
   }
