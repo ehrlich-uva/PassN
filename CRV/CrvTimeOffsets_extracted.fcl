@@ -30,7 +30,7 @@ physics :
     {
       module_type             : CrvTimingStudies
       crvRecoPulseModuleLabel : CrvRecoPulses
-      PEthreshold             : 10  //PEs
+      PEthreshold             : 16  //PEs
       removeTimeOffsets       : true
     }
   }

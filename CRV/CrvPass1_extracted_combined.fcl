@@ -63,15 +63,6 @@ outputs:
 }
 
 #include "Offline/CRVReco/fcl/epilog_extracted.fcl"
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[0].PEthreshold : 8  #EX (CRV-T modules)
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[1].PEthreshold : 8  #T1 (CRV-DS modules)
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[2].PEthreshold : 8  #T2 (CRV-LE modules)
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[0].maxTimeDifference : 10
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[1].maxTimeDifference : 10
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[2].maxTimeDifference : 10
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[0].coincidenceLayers : 3
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[1].coincidenceLayers : 4 #trigger sector
-physics.producers.CrvCoincidenceClusterFinder.sectorConfig[2].coincidenceLayers : 4 #trigger sector
 
 #include "Production/JobConfig/common/epilog.fcl"
 physics.analyzers.EventNtuple.mc.fill : false
