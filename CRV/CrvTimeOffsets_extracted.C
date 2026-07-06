@@ -154,7 +154,7 @@ void CrvTimeOffsets_extracted(const std::string &rootFileName, const std::string
     pad2->Divide(3,1);
 
     Plot(file,pad1,1,pdfFileName, 0*4+0,0, 0*4+2,0, measuredTimeDiffs);
-    Plot(file,pad2,1,pdfFileName, 4*4+0,1, 4*4+2,2, measuredTimeDiffs);
+    Plot(file,pad2,1,pdfFileName, 4*4+0,0, 4*4+2,0, measuredTimeDiffs);
 
     c->Print(pdfFileName.c_str(),"pdf");
   }
