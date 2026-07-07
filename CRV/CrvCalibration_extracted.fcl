@@ -39,12 +39,16 @@ physics: {
 }
 
 physics.producers.CrvRecoPulses.pedestalUndershootThreshold : 10000.0 //prevents it from taking the 1st ADC sample
-physics.producers.CrvRecoPulses.minADCdifference   : 5    //minimum ADC difference above pedestal to be considered for reconstruction
-physics.analyzers.CrvCalibration.tmpDBfileName  : "calibrationExtracted.txt"
-services.TFileService.fileName : "calibrationExtracted.root"
-services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
-services.ProditionsService.crvStatus.useDb: true
-services.ProditionsService.crvCalib.useDb: true
-#current status until we can use the database
-services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20260630.txt","pedestalsExtracted.txt"]
-services.DbService.verbose : 0
+physics.producers.CrvRecoPulses.minADCdifference            : 5       //minimum ADC difference above pedestal to be considered for reconstruction
+physics.analyzers.CrvCalibration.tmpDBfileName              : "calibrationExtracted.txt"
+services.TFileService.fileName     : "calibrationExtracted.root"
+services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_extracted.txt"
+services.ProditionsService.crvStatus.useDb : true
+services.ProditionsService.crvCalib.useDb  : true
+services.DbService.purpose  : CRV_COMMISSIONING
+services.DbService.version  : v1_0
+services.DbService.verbose  : 0
+services.DbService.textFile : ["pedestalsExtracted.txt"]  //need to use new pedestals
+services.TimeTracker.printSummary : true
+services.scheduler.wantSummary    : true
+services.message.destinations.log.outputStatistics : true
