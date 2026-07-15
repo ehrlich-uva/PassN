@@ -42,30 +42,9 @@ void CrvPedestal(const std::string &inputFileName, const std::string &outputFile
       outputFile<<channel<<","<<funcPedestal.GetParameter(1)<<",-1,-1"<<std::endl;  //only print out pedestal values
     }
 
-    outputFile<<std::endl;
-    inputFile->Write(0,TFile::kWriteDelete);
-
-    //time offsets
-    TTree *treeTimeOffsets = (TTree*)gDirectory->FindObjectAny("crvTimeOffsets");
-    size_t channel;
-    double offset;
-    treeTimeOffsets->SetBranchAddress("channel", &channel);
-    treeTimeOffsets->SetBranchAddress("timeOffset", &offset);
-    std::map<size_t,double> timeOffsets;  //first need to fill this map to filter out multiple entries of the same channel due to $ROOTSYS/bin/hadd
-    for(int i=0; i<treeTimeOffsets->GetEntries(); ++i)
-    {
-      treeTimeOffsets->GetEntry(i);
-      timeOffsets[channel]=offset;
-    }
-
-    outputFile<<"TABLE CRVTime"<<std::endl;
-    outputFile<<"#channel, timeOffset"<<std::endl;
-    for(auto iter=timeOffsets.begin(); iter!=timeOffsets.end(); ++iter)
-    {
-      outputFile<<iter->first<<","<<iter->second<<std::endl;
-    }
-
     outputFile.close();
+
+    inputFile->Write(0,TFile::kWriteDelete);
     inputFile->Close();
 }
 

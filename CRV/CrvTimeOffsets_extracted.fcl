@@ -26,24 +26,26 @@ physics :
 {
   analyzers :
   {
-    CrvTimingStudies:
+    CrvTimeOffsets:
     {
-      module_type             : CrvTimingStudies
+      module_type             : CrvTimeOffsets
       crvRecoPulseModuleLabel : CrvRecoPulses
       PEthreshold             : 16  //PEs
       removeTimeOffsets       : true
+      calibFileName           : "crvTimeOffsets.txt"
+      pdfFileName             : "crvTimeOffsets.pdf"
     }
   }
 
   t1 : [ ]
-  e1 : [ CrvTimingStudies ]
+  e1 : [ CrvTimeOffsets ]
 
   trigger_paths  : [t1]
   end_paths      : [e1]
 
 }
 
-services.TFileService.fileName : "crvRecoExtracted.root"
+services.TFileService.fileName : "crvTimeOffsets.root"
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
 services.ProditionsService.crvCalib.useDb: true
 services.ProditionsService.crvStatus.useDb: true

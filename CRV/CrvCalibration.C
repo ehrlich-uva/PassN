@@ -68,37 +68,9 @@ void CrvCalibration(const std::string &rootFileName, const std::string &calibFil
       outputFile<<channel<<","<<pedestal<<","<<calibValue[0]<<","<<calibValue[1]<<std::endl;
     }
 
-    outputFile<<std::endl;
-    inputFile->Write(0,TFile::kWriteDelete);
-
-    //time offsets
-    TTree *treeTimeOffsets = (TTree*)gDirectory->FindObjectAny("crvTimeOffsets");
-    if(!treeTimeOffsets)
-    {
-      std::cerr<<"Couldn't find time offset tree!"<<std::endl;
-      outputFile.close();
-      inputFile->Close();
-      return;
-    }
-
-    double offset;
-    treeTimeOffsets->SetBranchAddress("channel", &channel);
-    treeTimeOffsets->SetBranchAddress("timeOffset", &offset);
-    std::map<size_t,double> timeOffsets;  //first need to fill this map to filter out multiple entries of the same channel due to $ROOTSYS/bin/hadd
-    for(int i=0; i<treeTimeOffsets->GetEntries(); ++i)
-    {
-      treeTimeOffsets->GetEntry(i);
-      timeOffsets[channel]=offset;
-    }
-
-    outputFile<<"TABLE CRVTime"<<std::endl;
-    outputFile<<"#channel, timeOffset"<<std::endl;
-    for(auto iter=timeOffsets.begin(); iter!=timeOffsets.end(); ++iter)
-    {
-      outputFile<<iter->first<<","<<iter->second<<std::endl;
-    }
-
     outputFile.close();
+
+    inputFile->Write(0,TFile::kWriteDelete);
     inputFile->Close();
 }
 
