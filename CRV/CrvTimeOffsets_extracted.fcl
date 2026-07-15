@@ -34,6 +34,26 @@ physics :
       removeTimeOffsets       : true
       calibFileName           : "crvTimeOffsets.txt"
       pdfFileName             : "crvTimeOffsets.pdf"
+      specialFEBsType1        : []
+      specialFEBsType2        : [28,29]
+      moduleConfigs           : [
+                                  {moduleName: "EX_0"   firstFEB:  0    sides: 2    muonTaggers: false   neighborName: "EX_1"},
+                                  {moduleName: "EX_1"   firstFEB:  4    sides: 2    muonTaggers: false   neighborName: "EX_2"},
+                                  {moduleName: "EX_2"   firstFEB:  8    sides: 2    muonTaggers: false   neighborName: "EX_3"},
+                                  {moduleName: "EX_3"   firstFEB: 12    sides: 2    muonTaggers: false   neighborName: ""},
+                                  {moduleName: "T1_0"   firstFEB: 24    sides: 1    muonTaggers: false   neighborName: "T1_1"},
+                                  {moduleName: "T1_1"   firstFEB: 26    sides: 1    muonTaggers: false   neighborName: ""},
+                                  {moduleName: "T2_0"   firstFEB: 16    sides: 2    muonTaggers: false   neighborName: "T2_1"},
+                                  {moduleName: "T2_1"   firstFEB: 20    sides: 2    muonTaggers: false   neighborName: ""},
+                                  {moduleName: "MT_0"   firstFEB: 28    sides: 1    muonTaggers: true    neighborName: ""}
+                                ]
+      specialTimeOffsets      : [
+                                  {feb: 0    timeOffset:   0.0},   //FEB1 is used as reference
+                                  {feb: 16   timeOffset: 112.0},   //FEB17 has 72ft longer cable (for testing purpose)
+                                  {feb: 24   timeOffset:   7.8},   //FEB25 has 5ft longer cable
+                                  {feb: 28   timeOffset:  34.0}    //FEB29 has 22ft longer cable
+                                ]
+      checkOppositeSides      : ["EX_0", "T2_0"]
     }
   }
 
