@@ -43,12 +43,12 @@ physics.producers.CrvRecoPulses.minADCdifference            : 5       //minimum 
 physics.analyzers.CrvCalibration.tmpDBfileName              : "calibrationExtracted.txt"
 services.TFileService.fileName     : "calibrationExtracted.root"
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_extracted.txt"
-services.ProditionsService.crvStatus.useDb : true
+services.ProditionsService.crvStatus.useDb : false
 services.ProditionsService.crvCalib.useDb  : true
 services.DbService.purpose  : CRV_COMMISSIONING
 services.DbService.version  : v1_0
 services.DbService.verbose  : 0
-services.DbService.textFile : ["pedestalsExtracted.txt"]  //need to use new pedestals
+services.DbService.textFile : ["pedestalsExtracted.txt","Offline/CRVConditions/data/calibTime_extracted_default.txt"]  //need to use new pedestals
 services.TimeTracker.printSummary : true
 services.scheduler.wantSummary    : true
 services.message.destinations.log.outputStatistics : true

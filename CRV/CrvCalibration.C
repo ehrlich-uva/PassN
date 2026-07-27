@@ -1,8 +1,12 @@
 const double fitRangeStart=0.8;
 const double fitRangeEnd=1.2;
 const int    minHistEntries=100;
+//0xaaf and above
 const double minPeakPulseHeight=10.0;
 const double minPeakPulseArea=280.0;
+//0xa7d and below, 0xa96?
+//const double minPeakPulseHeight=8.0;
+//const double minPeakPulseArea=240.0;
 const int    spectrumNPeaks=100;
 const double spectrumPeakSigma=4.0;
 const double spectrumPeakThreshold=0.01;
