@@ -43,11 +43,6 @@ physics: {
 physics.analyzers.CrvPedestalFinder.tmpDBfileName  : "pedestalsExtracted.txt"
 services.TFileService.fileName     : "pedestalsExtracted.root"
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_extracted.txt"
-services.ProditionsService.crvStatus.useDb : true
-services.ProditionsService.crvCalib.useDb  : true
-services.DbService.purpose : CRV_COMMISSIONING
-services.DbService.version : v1_0
-services.DbService.verbose : 0
 services.TimeTracker.printSummary : true
 services.scheduler.wantSummary    : true
 services.message.destinations.log.outputStatistics : true
