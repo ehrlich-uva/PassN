@@ -67,8 +67,11 @@ physics :
 
 services.TFileService.fileName : "timeOffsetsExtracted.root"
 services.GeometryService.inputFile: "Offline/Mu2eG4/geom/geom_common_extracted.txt"
-services.ProditionsService.crvCalib.useDb: true
-services.ProditionsService.crvStatus.useDb: true
-#current status and calibration until we can use the database
-services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20260630.txt","Offline/CRVConditions/data/calib_extracted_20260630.txt"]
+services.ProditionsService.crvStatus.useDb : true
+services.ProditionsService.crvCalib.useDb  : true
+services.DbService.purpose : CRV_COMMISSIONING
+services.DbService.version : v1_0
+services.DbService.nearestMatch : true
 services.DbService.verbose : 0
+#current status and calibration until we can use the database
+#services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20260816.txt","Offline/CRVConditions/data/calibSiPM_extracted_20260816.txt","Offline/CRVConditions/data/calibTime_extracted_20260816.txt"]
