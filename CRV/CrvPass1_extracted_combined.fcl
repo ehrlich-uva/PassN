@@ -35,7 +35,6 @@ physics :
     }
     CrvRecoPulses: @local::CrvRecoPulses
     CrvCoincidenceClusterFinder: @local::CrvCoincidenceClusterFinder
-    @table::EventNtuple.producers
   }
   analyzers :
   {
