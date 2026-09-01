@@ -61,6 +61,7 @@ outputs:
 
 #include "Offline/CRVReco/fcl/epilog_extracted.fcl"
 
+physics.producers.CrvCoincidenceClusterFinder.ignoreSecondaryPulses : true  //ignore secondary pulses in a waveform
 services.TFileService.fileName     : "crvRecoExtracted_DQM.root"
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_extracted.txt"
 services.ProditionsService.crvStatus.useDb : true

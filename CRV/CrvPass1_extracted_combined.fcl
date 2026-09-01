@@ -43,8 +43,8 @@ physics :
     @table::EventNtuple.analyzers
   }
 
-  t1 : [ CrvDigi, CrvRecoPulses, CrvCoincidenceClusterFinder, @sequence::EventNtuple.PathNoMC ]
-  e1 : [ CrvDQMcollector, outfileReco, @sequence::EventNtuple.EndPathNoMC ]
+  t1 : [ CrvDigi, CrvRecoPulses, CrvCoincidenceClusterFinder ]
+  e1 : [ CrvDQMcollector, outfileReco, EventNtuple ]
 
   trigger_paths  : [t1]
   end_paths      : [e1]
@@ -65,9 +65,16 @@ outputs:
 #include "Offline/CRVReco/fcl/epilog_extracted.fcl"
 
 #include "Production/JobConfig/common/epilog.fcl"
+physics.producers.CrvCoincidenceClusterFinder.ignoreSecondaryPulses : true  //ignore secondary pulses in a waveform
 physics.analyzers.EventNtuple.mc.fill : false
 physics.analyzers.EventNtuple.trk.fill : false
 physics.analyzers.EventNtuple.calo.fill : false
+physics.analyzers.EventNtuple.helices.fill : false
+physics.analyzers.EventNtuple.timeclusters.fill : false
+physics.analyzers.EventNtuple.lineseeds.fill : false
+physics.analyzers.EventNtuple.lumistream.fill : false
+physics.analyzers.EventNtuple.subruns.genEventCount.include : false
+physics.analyzers.EventNtuple.subruns.cosmicLivetime.include : false
 physics.analyzers.EventNtuple.RecoCountTag : ""
 physics.analyzers.EventNtuple.PBTTag : ""
 physics.analyzers.EventNtuple.hasCRV : false  #false prevents skipping events without CRV content in the ntuple

@@ -25,17 +25,13 @@ source :
 
 physics :
 {
-  producers :
-  {
-    @table::EventNtuple.producers
-  }
   analyzers :
   {
     @table::EventNtuple.analyzers
   }
 
-  t1 : [ @sequence::EventNtuple.PathNoMC ]
-  e1 : [ @sequence::EventNtuple.EndPathNoMC ]
+  t1 : [ ]
+  e1 : [ EventNtuple ]
 
   trigger_paths  : [t1]
   end_paths      : [e1]
@@ -46,6 +42,12 @@ physics :
 physics.analyzers.EventNtuple.mc.fill : false
 physics.analyzers.EventNtuple.trk.fill : false
 physics.analyzers.EventNtuple.calo.fill : false
+physics.analyzers.EventNtuple.helices.fill : false
+physics.analyzers.EventNtuple.timeclusters.fill : false
+physics.analyzers.EventNtuple.lineseeds.fill : false
+physics.analyzers.EventNtuple.lumistream.fill : false
+physics.analyzers.EventNtuple.subruns.genEventCount.include : false
+physics.analyzers.EventNtuple.subruns.cosmicLivetime.include : false
 physics.analyzers.EventNtuple.RecoCountTag : ""
 physics.analyzers.EventNtuple.PBTTag : ""
 physics.analyzers.EventNtuple.hasCRV : false  #false prevents skipping events without CRV content in the ntuple
