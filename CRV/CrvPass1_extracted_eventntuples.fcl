@@ -31,7 +31,7 @@ physics :
   }
 
   t1 : [ ]
-  e1 : [ EventNtuple ]
+  e1 : [ @sequence::EventNtuple.EndPath ]
 
   trigger_paths  : [t1]
   end_paths      : [e1]
