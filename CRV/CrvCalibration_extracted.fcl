@@ -45,7 +45,7 @@ physics.producers.CrvRecoPulses.maxAdjustedPedestalDifference  :  10000.0
 physics.producers.CrvRecoPulses.maxPulseLength                 : 12       //only use single hit pulses for dark count calibration
 physics.producers.CrvRecoPulses.pedestalAdjustment             :  true    //precision pedestal adjustment for dark count calibration
 physics.producers.CrvRecoPulses.pedestalUndershootThreshold    :  10000.0 //forces it to use the adjusted precision pedestal instead of the simple undershoot adjustment
-physics.producers.CrvRecoPulses.minADCdifference               :  5.0     //minimum ADC difference above pedestal to be considered for reconstruction
+physics.producers.CrvRecoPulses.minADCdifference               :  7.0     //minimum ADC difference above pedestal to be considered for reconstruction
 physics.producers.CrvRecoPulses.defaultBeta                    : 10.0
 physics.producers.CrvRecoPulses.ignoreChannels                 :  false
 physics.analyzers.CrvCalibration.tmpDBfileName                 : "calibrationExtracted.txt"

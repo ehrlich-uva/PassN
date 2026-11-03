@@ -48,10 +48,14 @@ physics :
                                   {moduleName: "MT_0"   firstFEB: 28    sides: 1    muonTaggers: true    neighborName: ""}
                                 ]
       specialTimeOffsets      : [
+                                  //sector 1
                                   {feb: 0    timeOffset:   0.0},   //FEB1 is used as reference
-                                  {feb: 16   timeOffset: 112.0},   //FEB17 has 72ft longer cable (for testing purpose)
-                                  {feb: 24   timeOffset:   7.8},   //FEB25 has 5ft longer cable
-                                  {feb: 28   timeOffset:  34.0}    //FEB29 has 22ft longer cable
+                                  //sector 3
+                                  {feb: 16   timeOffset: 110.5},   //FEB17 has 72ft longer cable (for testing purpose) //112.0
+                                  //sector 2
+                                  {feb: 24   timeOffset:  -7.0},   //FEB25 has 5ft longer cable  //7.8
+                                  //sector 4
+                                  {feb: 28   timeOffset:  20.5}    //FEB29 has 22ft longer cable //34.0
                                 ]
       checkOppositeSides      : ["EX_0", "T2_0"]
     }
@@ -71,7 +75,7 @@ services.ProditionsService.crvStatus.useDb : true
 services.ProditionsService.crvCalib.useDb  : true
 services.DbService.purpose : CRV_COMMISSIONING
 services.DbService.version : v1_0
-services.DbService.nearestMatch : true
+services.DbService.nearestMatch : false
 services.DbService.verbose : 0
 #current status and calibration until we can use the database
 #services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20260816.txt","Offline/CRVConditions/data/calibSiPM_extracted_20260816.txt","Offline/CRVConditions/data/calibTime_extracted_20260816.txt"]
