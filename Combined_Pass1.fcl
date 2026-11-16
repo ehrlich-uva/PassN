@@ -69,7 +69,7 @@ services.ProditionsService.calCalib.useDb : true
 
 ### CRV CONFIG ###
 #include "Offline/CRVReco/fcl/epilog_extracted.fcl"
-physics.producers.CrvCoincidenceClusterFinder.ignoreSecondaryPulses : true  //ignore secondary pulses in a waveform
+physics.producers.CrvRecoPulses.removeRingingArtifacts : true  //remove ringing artifacts in a waveform
 services.ProditionsService.crvStatus.useDb : true
 services.ProditionsService.crvCalib.useDb  : true
 

@@ -87,7 +87,7 @@ outputs:
   outfileReco :
   {
     module_type   :   RootOutput
-    fileName      :   "crvRecoExtracted.art"
+    fileName      :   "rec.owner.desc.dsconf.seq.art"
     outputCommands : [ "keep *_*_*_*" ,
                        "drop artdaq::*_*_*_*" ]
   }
@@ -96,7 +96,8 @@ outputs:
 #include "Offline/CRVReco/fcl/epilog_extracted.fcl"
 
 #include "Production/JobConfig/common/epilog.fcl"
-physics.producers.CrvCoincidenceClusterFinder.ignoreSecondaryPulses : true  //ignore secondary pulses in a waveform
+physics.producers.CrvCoincidenceClusterFinder.ignoreSecondaryPulses : false  //obsolete (needs to stay false)
+physics.producers.CrvRecoPulses.removeRingingArtifacts : true  //remove ringing artifacts in a waveform
 physics.analyzers.EventNtuple.mc.fill : false
 physics.analyzers.EventNtuple.trk.fill : false
 physics.analyzers.EventNtuple.calo.fill : false
@@ -117,7 +118,7 @@ physics.analyzers.EventNtuple.crv.fillDigis : true
 physics.analyzers.EventNtuple.crv.fillPulses : true
 physics.analyzers.EventNtuple.crv.keepUnclusteredPulses : true
 
-services.TFileService.fileName     : "crvRecoExtracted.root"
+services.TFileService.fileName     : "ntd.owner.desc.dsconf.seq.root"
 services.GeometryService.inputFile : "Offline/Mu2eG4/geom/geom_common_extracted.txt"
 services.ProditionsService.crvStatus.useDb : true
 services.ProditionsService.crvCalib.useDb  : true

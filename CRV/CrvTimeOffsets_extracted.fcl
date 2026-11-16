@@ -78,4 +78,4 @@ services.DbService.version : v1_0
 services.DbService.nearestMatch : false
 services.DbService.verbose : 0
 #current status and calibration until we can use the database
-#services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20260816.txt","Offline/CRVConditions/data/calibSiPM_extracted_20260816.txt","Offline/CRVConditions/data/calibTime_extracted_20260816.txt"]
+#services.DbService.textFile : ["Offline/CRVConditions/data/status_extracted_20261029.txt","Offline/CRVConditions/data/calibSiPM_extracted_20261029.txt","Offline/CRVConditions/data/calibTime_extracted_20261029.txt"]
